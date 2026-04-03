@@ -61,18 +61,24 @@ app.layout = html.Div(
 def update_graph(selected_region):
     if selected_region == 'all':
         filtered_df = df
-        color_val = "Region"
         title_text = "Pink Morsel Sales - All Regions"
     else:
         filtered_df = df[df['Region'] == selected_region]
-        color_val = None
         title_text = f"Pink Morsel Sales - {selected_region.capitalize()} Region"
+
+    region_colors = {
+        "north": "#00f2fe", 
+        "south": "#ff0844",  
+        "east":  "#b02bf4", 
+        "west":  "#00e676"   
+    }
 
     fig = px.line(
         filtered_df, 
         x="Date", 
         y="Sales", 
-        color=color_val,
+        color="Region",
+        color_discrete_map=region_colors,
         title=title_text,
         labels={
             "Date": "Sale Date",
